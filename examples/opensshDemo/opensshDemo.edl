@@ -1,0 +1,27 @@
+/*
+ * Copyright (c) Huawei Technologies Co., Ltd. 2020. All rights reserved.
+ * secGear is licensed under the Mulan PSL v2.
+ * You can use this software according to the terms and conditions of the Mulan PSL v2.
+ * You may obtain a copy of Mulan PSL v2 at:
+ *     http://license.coscl.org.cn/MulanPSL2
+ * THIS SOFTWARE IS PROVIDED ON AN "AS IS" BASIS, WITHOUT WARRANTIES OF ANY KIND, EITHER EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO NON-INFRINGEMENT, MERCHANTABILITY OR FIT FOR A PARTICULAR
+ * PURPOSE.
+ * See the Mulan PSL v2 for more details.
+ */
+
+enclave {
+    include "secgear_urts.h"
+    include "openssl/dh.h"
+    include "packet.h"
+    include "sshkey.h"
+    from "secgear_tstdc.edl" import *; 
+    from "secgear_tssl.edl" import *;
+
+    trusted {
+        public int dh_gen_key([in,out,size=dh_len]DH *dh, size_t dh_len, int need);
+        public int get_hostkey_by_type(int type, int nid, int need_private, 
+                                       [in,size=ssh_len]struct ssh *ssh, size_t ssh_len,
+                                       [out,size=sshkey_len]struct sshkey *key, size_t sshkey_len);
+    };
+};
